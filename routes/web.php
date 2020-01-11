@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Book Route
 Route::post('/books', 'BooksController@store');
 Route::patch('/books/{book}', 'BooksController@update');
 Route::delete('/books/{book}', 'BooksController@destroy');
+
+//Author Route
+Route::post('/authors', 'AuthorController@store');
