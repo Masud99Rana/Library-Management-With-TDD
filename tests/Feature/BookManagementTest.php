@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
-class BookReservationTest extends TestCase
+class BookManagementTest extends TestCase
 {   
    
     // use WithoutMiddleware;
@@ -28,8 +28,10 @@ class BookReservationTest extends TestCase
             'author' => 'Masud Rana'
         ]);
 
-        $response->assertOk();
+        $book = Book::first();
+
         $this->assertCount(1, Book::all());
+        $response->assertRedirect($book->path());
     }
 
     /** @test */
@@ -79,5 +81,29 @@ class BookReservationTest extends TestCase
 
         $this->assertEquals('New title', Book::first()->title);
         $this->assertEquals('New Author', Book::first()->author);
+        $response->assertRedirect($book->fresh()->path());
+    }
+
+    /** @test */
+    public function a_book_can_be_deleted()
+    {
+        // $this->withoutExceptionHandling();
+        
+        $this->post('/books', $this->data());
+        
+        $book = Book::first();
+        $this->assertCount(1, Book::all());
+        $response = $this->delete('/books/'.$book->id);
+
+        $this->assertCount(0, Book::all());
+        $response->assertRedirect('/books');
+    }
+
+    private function data()
+    {
+        return [
+            'title' => 'Cool Book Title',
+            'author' => 'Masud Rana',
+        ];
     }
 }
