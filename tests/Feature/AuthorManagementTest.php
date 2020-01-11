@@ -21,7 +21,7 @@ class AuthorManagementTest extends TestCase
     /** @test */
     public function a_book_can_be_added_to_to_library()
     {   
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         
         $this->post('/authors', $this->data());
         

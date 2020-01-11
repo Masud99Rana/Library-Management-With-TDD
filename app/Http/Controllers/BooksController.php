@@ -15,8 +15,8 @@ class BooksController extends Controller
     }
 
     public function update(Book $book){
-
     	$book->update($this->validateRequest());
+
         return redirect('/books/'. $book->id);
     }
 
@@ -29,7 +29,7 @@ class BooksController extends Controller
     public function validateRequest(){
     	return request()->validate([
     		'title' => 'required',
-    		'author' => 'required'
+    		'author_id' => 'required'
     	]);
     }
 }

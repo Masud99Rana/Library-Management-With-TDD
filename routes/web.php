@@ -21,4 +21,4 @@ Route::patch('/books/{book}', 'BooksController@update');
 Route::delete('/books/{book}', 'BooksController@destroy');
 
 //Author Route
-Route::post('/authors', 'AuthorController@store');
+Route::post('/authors', 'AuthorsController@store');
