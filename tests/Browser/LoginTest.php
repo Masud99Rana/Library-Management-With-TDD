@@ -7,11 +7,12 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Auth;
 
 class LoginTest extends DuskTestCase
 {   
     /** Sometimes RefreshDatabase Conflict, It should be commented when goes into deep */
-    use RefreshDatabase; 
+    // use RefreshDatabase; 
     /**
      * A Dusk test example.
      *
@@ -32,6 +33,14 @@ class LoginTest extends DuskTestCase
                     ->press('Login')
                     // ->waitForLocation('/home');
                     ->assertPathIs('/home');
+        });
+    }
+
+    public function testOnlyLoginUserCanVisitHomePage(){
+
+        $this->browse(function ($browser) {
+            $browser->visit('/home')
+                    ->assertPathIs('/login');
         });
     }
 }
